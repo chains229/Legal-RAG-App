@@ -7,8 +7,7 @@ The documents are transformed to a vector database using RecursiveCharacterTextS
 # How to run
 You can run database\create_knowledge_database.ipynb to obtain the FAISS folder of the knowledge database. The embedding model, chunk size and chunk overlap size can be edited there.
 
-The crawled documents and a database folder (using multilingual-e5-base as embedding model, a chunk size of 512 and chunk overlap size of 100) i ran can be found in [this drive link]
-(https://drive.google.com/drive/folders/1r7hWy5v0baKppk2sMGAWLS0yiEoD0z3-?usp=sharing). The FAISS database folder, Huggingface token and Gemini API key should be defined using OS variables.
+The crawled documents and a database folder (using multilingual-e5-base as embedding model, a chunk size of 512 and chunk overlap size of 100) i ran can be found in [this drive link](https://drive.google.com/drive/folders/1r7hWy5v0baKppk2sMGAWLS0yiEoD0z3-?usp=sharing). The FAISS database folder, Huggingface token and Gemini API key should be defined using OS variables.
 
 **Google Colab**
 
@@ -16,22 +15,23 @@ Since my personal device does not have a powerful GPU, i run the app using Googl
 
 **Local**
 If you're running on your PC, the app can be run using a virtual environment:
-'''
+
+```python
 python -m venv venv
 venv\Scripts\activate
-'''
+```
 
 Install the required libraries:
-'''
+```python
 pip install -r requirements.txt
-'''
+```
 
 Remember to set necessary OS variables.
 
 Run the app:
-'''
+```python
 python main.py
-'''
+```
 
 
 # To-do
