@@ -1,0 +1,17 @@
+sentence-transformers
+typing_extensions
+langchain
+langchain-community
+huggingface_hub
+transformers
+accelerate
+bitsandbytes
+openpyxl
+datasets
+gdown
+google-generativeai
+pydantic
+jsonref
+flask
+torch
+faiss-gpu
