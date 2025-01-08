@@ -14,7 +14,7 @@ from pyngrok import ngrok, conf
 import socket
 
 print("Enter your authtoken, which can be copied from https://dashboard.ngrok.com/get-started/your-authtoken")
-conf.get_default().auth_token = userdata.get('NGROK')
+conf.get_default().auth_token = os.environ["NGROK_TOKEN"]
 
 # Set your ngrok authtoken here
 ngrok_token = os.getenv("NGROK_TOKEN")
@@ -58,5 +58,5 @@ def getprediction():
    return render_template('index.html', output=prediction)
 
 
-threading.Thread(target=app.run, kwargs={"use_reloader": False}).start()
+threading.Thread(target=app.run).start()
 
