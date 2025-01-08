@@ -7,6 +7,11 @@ import os
 from flask import Flask, request, render_template, Blueprint
 from flask_ngrok import run_with_ngrok
 import torch
+from pyngrok import ngrok
+
+# Set your ngrok authtoken here
+ngrok_token = os.getenv("NGROK_TOKEN")
+ngrok.set_auth_token(ngrok_token)
 
 model = genai.GenerativeModel("models/gemini-1.5-flash-002")
 faiss_folder = os.getenv("FAISS_FOLDER")
@@ -42,5 +47,5 @@ def getprediction():
    
 
 if __name__ == "__main__":
-    app.run(debug=True)
+   app.run()
 

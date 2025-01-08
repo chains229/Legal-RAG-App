@@ -15,3 +15,4 @@ jsonref
 flask
 torch
 faiss-gpu
+pyngrok
