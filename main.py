@@ -5,10 +5,11 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 import os
 from flask import Flask, request, render_template, Blueprint
+from flask_ngrok import run_with_ngrok
 import torch
 
 model = genai.GenerativeModel("models/gemini-1.5-flash-002")
-faiss_folder = os.get_env("FAISS_FOLDER")
+faiss_folder = os.getenv("FAISS_FOLDER")
 
 # if you use another embedding model, modify here.
 embedding_model = HuggingFaceEmbeddings(
@@ -24,6 +25,7 @@ knowledge_index = FAISS.load_local(
         allow_dangerous_deserialization=True
     )
 app = Flask(__name__, template_folder = 'template')
+run_with_ngrok(app)
 
 @app.route('/')
 def home():
