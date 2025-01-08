@@ -1,13 +1,20 @@
 import RAG.RAG as rag
 import google.generativeai as genai
+from google.colab import userdata
 from huggingface_hub import login
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
+import getpass
 import os
+import threading
 from flask import Flask, request, render_template, Blueprint
 from flask_ngrok import run_with_ngrok
 import torch
-from pyngrok import ngrok
+from pyngrok import ngrok, conf
+import socket
+
+print("Enter your authtoken, which can be copied from https://dashboard.ngrok.com/get-started/your-authtoken")
+conf.get_default().auth_token = userdata.get('NGROK')
 
 # Set your ngrok authtoken here
 ngrok_token = os.getenv("NGROK_TOKEN")
@@ -29,8 +36,13 @@ knowledge_index = FAISS.load_local(
         embedding_model, 
         allow_dangerous_deserialization=True
     )
+
 app = Flask(__name__, template_folder = 'template')
 run_with_ngrok(app)
+
+public_url = ngrok.connect(5000).public_url
+print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}/\"".format(public_url, 5000))
+app.config["BASE_URL"] = public_url
 
 @app.route('/')
 def home():
@@ -44,8 +56,7 @@ def getprediction():
    prediction = rag.answer_one_sample(input, model, knowledge_index)
 
    return render_template('index.html', output=prediction)
-   
 
-if __name__ == "__main__":
-   app.run()
+
+threading.Thread(target=app.run, kwargs={"use_reloader": False}).start()
 
