@@ -1,23 +1,105 @@
-<html >
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>RAG</title>  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+    
+    .output {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
 </head>
 
 <body>
- <div>
-	<h1>RAG Chatbot</h1>
-
-    <form action="{{ url_for('getprediction')}}"method="post">
-    	<input type="text" name="question" placeholder="Question" required="required" />
-        <button type="submit" class="btn btn-primary btn-block btn-large">getprediction</button>
+  <div class="container">
+    <h1>RAG Chatbot</h1>
+    <form id="rag-form">
+      <input type="text" id="question" placeholder="Enter your question" required />
+      <button type="submit">Get Prediction</button>
     </form>
+    <div id="output" class="output"></div>
+  </div>
 
-   <br>
-   <br>
-   {{ output }}
+  <script>
+    // Handle form submission
+    document.getElementById('rag-form').addEventListener('submit', async function (e) {
+      e.preventDefault(); // Prevent page reload
+      
+      const question = document.getElementById('question').value;
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = 'Fetching answer...';
 
- </div>
+      try {
+        // Send the question to the server
+        const response = await fetch('/getprediction', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question }),
+        });
 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
+        const data = await response.json();
+        outputDiv.innerHTML = `<strong>Answer:</strong> ${data.answer}`;
+      } catch (error) {
+        console.error('Error:', error);
+        outputDiv.innerHTML = 'An error occurred. Please try again.';
+      }
+
+      // Clear the input field
+      document.getElementById('question').value = '';
+    });
+  </script>
 </body>
 </html>
