@@ -52,8 +52,8 @@ def home():
 def getprediction():    
 
    input = request.form['question']
-   #prediction = rag.answer_without_context(input, model)
-   prediction = rag.answer_one_sample(input, model, knowledge_index)
+   prediction = rag.answer_without_context(input, model)
+   #prediction = rag.answer_one_sample(input, model, knowledge_index)
 
    return render_template('index.html', output=prediction)
 

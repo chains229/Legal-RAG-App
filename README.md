@@ -2,7 +2,9 @@
 
 In this project, i use crawled documents from Thuvienphapluat to form a knowledge database in FAISS and build a retrieval-augmented generation application for these documents.
 
-The documents are transformed to a vector database using RecursiveCharacterTextSplitter (the embedding model, chunk size, chunk overlap can be edited). I utilize FAISS for the vector database and Langchain for chunking. For the generator, i use Gemini models using API (in this code i use 1.5 Flash, which can be modified in main.py). The app is built using Flask as backend and a simple (i'm not humble, it's simple af) HTML frontend. I use ngrok to display the result.
+The documents are transformed to a vector database using RecursiveCharacterTextSplitter (the embedding model, chunk size, chunk overlap can be modified). I utilize FAISS for the vector database and Langchain for chunking. For the generator, i use Gemini models using API (in this code i use 1.5 Flash, which can be modified in main.py). The app is built using Flask as backend and a simple (i'm not humble, it's simple af) HTML frontend. I use ngrok to display the result.
+
+![Front-end](template/demo.png)
 
 # How to run
 You can run database\create_knowledge_database.ipynb to obtain the FAISS folder of the knowledge database. The embedding model, chunk size and chunk overlap size can be edited there.
@@ -33,6 +35,4 @@ Run the app:
 python main.py
 ```
 
-
-# To-do
-- Code better frontend.
+Then you click on the ngrok link displayed to use the app.
